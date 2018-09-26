@@ -14,28 +14,32 @@ class Node:
 # exists otherwise false
 def findPath( root, path, k):
 
-    # Baes Case
-    if root is None:
+    try:
+        # Baes Case
+        if root is None:
+            return False
+
+        # Store this node is path vector. The node will be
+        # removed if not in path from root to k
+        path.append(root.key)
+
+        # See if the k is same as root's key
+        if root.key == k :
+            return True
+
+        # Check if k is found in left or right sub-tree
+        if ((root.left != None and findPath(root.left, path, k)) or
+                (root.right!= None and findPath(root.right, path, k))):
+            return True
+
+        # If not present in subtree rooted with root, remove
+        # root from path and return False
+
+        path.pop()
         return False
 
-    # Store this node is path vector. The node will be
-    # removed if not in path from root to k
-    path.append(root.key)
-
-    # See if the k is same as root's key
-    if root.key == k :
-        return True
-
-    # Check if k is found in left or right sub-tree
-    if ((root.left != None and findPath(root.left, path, k)) or
-            (root.right!= None and findPath(root.right, path, k))):
-        return True
-
-    # If not present in subtree rooted with root, remove
-    # root from path and return False
-
-    path.pop()
-    return False
+    except AttributeError as error:
+         print "Invalid key input"
 
 # Returns LCA if node n1 , n2 are present in the given
 # binary tre otherwise return -1
