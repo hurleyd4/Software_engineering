@@ -38,7 +38,7 @@ def findPath( root, path, k):
         path.pop()
         return False
 
-    except AttributeError as error:
+    except AttributeError as error:     #prevents error being thrown for invalid input
          print "Invalid key input"
 
 # Returns LCA if node n1 , n2 are present in the given
