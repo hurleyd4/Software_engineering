@@ -54,7 +54,7 @@ class testLCA(unittest.TestCase):
         self.assertEqual(findLCA(root,1,8),6)
         self.assertEqual(findLCA(root,8,8),8) # testing to see if the lca of a node is itself
 
-
+    #need to begin testing for directed acyclic graph
 
 if __name__ == '__main__':
     unittest.main()
