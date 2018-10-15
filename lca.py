@@ -15,20 +15,15 @@ class Graph(object):
 # Finds the path from root node to given root of the tree.
 # Stores the path in a list path[], returns true if path
 # exists otherwise false
-    def findPath(self, root, path, k):
+    def findPath(self, root, end, path = None):
 
         try:
             # Baes Case
-            if root is None:
-                return False
+            if path == None:
+                path = []
 
-            # Store this node is path vector. The node will be
-            # removed if not in path from root to k
-            path.append(root.key)
-
-            # See if the k is same as root's key
-            if root.key == k :
-                return True
+            graph = self.__graph_dict
+            path = path + [start_vertex]
 
             # Check if k is found in left or right sub-tree
             if ((root.left != None and findPath(root.left, path, k)) or
@@ -54,8 +49,8 @@ class Graph(object):
 
         # Find paths from root to n1 and root to n2.
         # If either n1 or n2 is not present , return -1
-        if (not findPath(root, path1, n1) or not findPath(root, path2, n2)):
-            return -1
+        path1 = self.find_path(root,n1)
+        path2 = self.find_path(root, n2)
 
         # Compare the paths to get the first different value
         i = 0
