@@ -6,26 +6,27 @@ from lca import findPath
 class testLCA(unittest.TestCase):
 
     def test_null_tree(self):                           #testing both functions for null binary search trees
-        self.assertEqual( findLCA(None,3,4), -1)        #as there is no root the function should return -1
-        self.assertEqual( findPath(None,1,1), False)    #as there is no root the function should return False
+        g = {}
+        self.assertEqual( g.findLCA(None,3,4), -1)        #as there is no root the function should return -1
+        self.assertEqual( g.findPath(None,1,1), False)    #as there is no root the function should return False
 
     def test_root_only(self):                           #testing for a tree with only one node
-        root = Node(1)                                  #setting root equal to nodewith key 1
+        g = {"a"}                                  #setting root equal to nodewith key 1
         path =[]                                        #empty path to pass into findPath function
-        self.assertEqual( findPath(root,path,1), True)  #confirming that path can be found when only the root is available
-        self.assertEqual( findLCA(root,1,1), 1)         #confirming that the path that was found gives the correct lca for only root
+        self.assertEqual( g.findPath(root,path,1), True)  #confirming that path can be found when only the root is available
+        self.assertEqual( g.findLCA(root,1,1), 1)         #confirming that the path that was found gives the correct lca for only root
 
     def test_invalid_key(self):                         #testing for an invalid node entry
-        root = Node(1)                                  #
-        root.left = Node(2)                             #                   1
-        root.right = Node(3)                            #           2               3
-        root.left.left = Node(4)                        #       4       5       6       7
-        root.left.right = Node(5)                       #
-        root.right.left = Node(6)                       #
-        root.right.right = Node(7)                      #
+        g = { "a" : ["b","d"],
+              "b" : ["c"],
+              "c" : ["b", "c", "d", "e"],
+              "d" : ["b", "e", "f"],
+              "e" : ["c"],
+              "f" : ["c"]
+            }
         path =[]                                        #
-        self.assertEqual(findPath(root,path,8), False)  #the key 8 is invalid, should return False and print "Invalid key input"
-        self.assertEqual(findLCA(root,4,8),-1)          #again 8 is invalid, should return -1
+        self.assertEqual(g.findPath(root,path,8), False)  #the key 8 is invalid, should return False and print "Invalid key input"
+        self.assertEqual(g.findLCA(root,4,8),-1)          #again 8 is invalid, should return -1
 
     def test_invalid_type(self):                        #testing for an invald type entry
         root = Node(1)                                  #
