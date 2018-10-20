@@ -38,6 +38,25 @@ class Graph(object):
         #except AttributeError as error:     #prevents error being thrown for invalid input
         #    print "Invalid key input"
 
+    def findAllPaths(self, root, end, path=[]):
+        """ find all paths from start_vertex to
+            end_vertex in graph """
+        graph = self.__graph_dict
+        path = path + [root]
+        if root == end:
+            return [path]
+        if root not in graph:
+            return []
+        paths = []
+        for vertex in graph[root]:
+            if vertex not in path:
+                extended_paths = self.findAllPaths(vertex,
+                                                     end,
+                                                     path)
+                for p in extended_paths:
+                    paths.append(p)
+        return paths
+
     # Returns LCA if node n1 , n2 are present in the given
     # binary tre otherwise return -1
     def findLCA(self, root, n1, n2):

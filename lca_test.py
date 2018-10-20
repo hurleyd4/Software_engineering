@@ -8,6 +8,7 @@ class testLCA(unittest.TestCase):
         graph = Graph(g)
         self.assertEqual(graph.findLCA(None,"a","b"), -1)        #as there is no root the function should return -1
         self.assertEqual(graph.findPath("a","b"), None)    #as there is no root the function should return False
+        self.assertEqual(graph.findAllPaths("a","b"), [])
 
     def test_root_only(self):                           #testing for a tree with only one node
         g = {"a"}                                  #setting root equal to nodewith key 1
@@ -15,6 +16,7 @@ class testLCA(unittest.TestCase):
         path =[]                                        #empty path to pass into findPath function
         self.assertEqual(graph.findPath("a","a"), ["a"])  #confirming that path can be found when only the root is available
         self.assertEqual(graph.findLCA("a","a","a"), "a")         #confirming that the path that was found gives the correct lca for only root
+        self.assertEqual(graph.findAllPaths("a","a"), [["a"]])
 
     def test_invalid_key(self):                         #testing for an invalid node entry
         g = { "a" : ["b","c"],
@@ -25,6 +27,7 @@ class testLCA(unittest.TestCase):
         path =[]                                        #
         self.assertEqual(graph.findPath("a",8), None)      #the key 8 is invalid, should return None and print "Invalid key input"
         self.assertEqual(graph.findLCA("a",8, 9),-1)           #again 8 is invalid, should return -1
+        self.assertEqual(graph.findAllPaths("a","f"), [])
 
     def test_invalid_type(self):                        #testing for an invald type entry
         g = { "a" : ["b","c"],
