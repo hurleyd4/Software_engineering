@@ -39,8 +39,6 @@ class Graph(object):
         #    print "Invalid key input"
 
     def findAllPaths(self, root, end, path=[]):
-        """ find all paths from start_vertex to
-            end_vertex in graph """
         graph = self.__graph_dict
         path = path + [root]
         if root == end:
@@ -66,23 +64,30 @@ class Graph(object):
         path2 = []
         # Find paths from root to n1 and root to n2.
         # If either n1 or n2 is not present , return -1
-        path1 = self.findPath(root,n1)
-        path2 = self.findPath(root,n2)
+        path1 = self.findAllPaths(root,n1)
+        path2 = self.findAllPaths(root,n2)
         print("Path1: ")
         print(path1)
         print("Path2: ")
         print(path2)
 
-        if path1 == None:
+        if path1 == []:
             return -1;
 
-        if path2 == None:
+        if path2 == []:
             return -1;
 
         # Compare the paths to get the first different value
-        i = 0
-        while(i < len(path1) and i < len(path2)):
-            if path1[i] != path2[i]:
-                break
-            i += 1
-        return path1[i-1]
+        possibleLCAs = []
+
+        for x in path1:
+            i = 0
+            for y in path2:
+                while(i < len(x) and i < len(y)):
+                    if x[i] != y[i]:
+                        break
+                    i += 1
+                possibleLCAs.append(x[i-1])
+
+        print("\nPossible LCAs: ")
+        print possibleLCAs
