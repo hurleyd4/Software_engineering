@@ -11,32 +11,6 @@ class Graph(object):
         if graph_dict == None:
             graph_dict = {}
         self.__graph_dict = graph_dict
-# Finds the path from root node to given root of the tree.
-# Stores the path in a list path[], returns true if path
-# exists otherwise false
-    def findPath(self, root, end, path = None):
-
-        #try:
-            # Baes Case
-            if path == None:
-                path = []
-            graph = self.__graph_dict
-            path = path + [root]
-            if root == end:
-                return path
-            if root not in graph:
-                return None
-            for vertex in graph[root]:
-                if vertex not in path:
-                    extended_path = self.findPath(vertex,
-                                                   end,
-                                                   path)
-                    if extended_path:
-                        return extended_path
-            return None
-
-        #except AttributeError as error:     #prevents error being thrown for invalid input
-        #    print "Invalid key input"
 
     def findAllPaths(self, root, end, path=[]):
         graph = self.__graph_dict
@@ -66,20 +40,12 @@ class Graph(object):
         # If either n1 or n2 is not present , return -1
         path1 = self.findAllPaths(root,n1)
         path2 = self.findAllPaths(root,n2)
-        print("Path1: ")
-        print(path1)
-        print("Path2: ")
-        print(path2)
 
-        if path1 == []:
-            return -1;
-
-        if path2 == []:
+        if path1 == [] or path2 == []:
             return -1;
 
         # Compare the paths to get the first different value
         possibleLCAs = []
-
         for x in path1:
             i = 0
             for y in path2:
@@ -87,7 +53,39 @@ class Graph(object):
                     if x[i] != y[i]:
                         break
                     i += 1
-                possibleLCAs.append(x[i-1])
+                if(x[i-1] == n1 or x[i-1] == n2):
+                    return x[i-1];
+                else:
+                    possibleLCAs.append(x[i-1])
 
-        print("\nPossible LCAs: ")
-        print possibleLCAs
+        set_of_lcas = remove_duplicates(possibleLCAs)
+        if len(set_of_lcas) > 1:
+            return self.findDeepestLCA(root, set_of_lcas)
+        else:
+            return set_of_lcas[0]
+
+
+    def findDeepestLCA(self, root, set):
+        maxLength = 0
+        currentLength = 0
+        lca = root
+        paths = []
+        for i in set:
+            paths = self.findAllPaths(root, i)
+            for j in paths:
+                currentLength = len(j)
+                if(currentLength > maxLength):
+                    maxLength = currentLength
+                    lca = i
+        return lca
+
+def remove_duplicates(values):
+    output = []
+    seen = set()
+    for value in values:
+        # If value has not been encountered yet,
+        # ... add it to both list and set.
+        if value not in seen:
+            output.append(value)
+            seen.add(value)
+    return output
